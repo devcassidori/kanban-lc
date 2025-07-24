@@ -1,0 +1,6 @@
+ID,Título,Descrição,Prioridade,Responsável,Status,Data Criação,Última Atualização
+"task_example_1","Configurar ambiente de desenvolvimento","Instalar Node.js, VS Code e configurar extensões necessárias","Alta","João Silva","A Fazer","23/07/2024 10:00:00","23/07/2024 10:00:00"
+"task_example_2","Implementar autenticação","Criar sistema de login e registro de usuários","Média","Maria Santos","Fazendo","23/07/2024 10:15:00","23/07/2024 11:30:00"
+"task_example_3","Escrever documentação","Documentar APIs e criar guia do usuário","Baixa","Pedro Costa","Feito","23/07/2024 09:00:00","23/07/2024 16:45:00"
+"task_example_4","Revisar código","Code review do módulo de pagamentos","Alta","Ana Lima","A Fazer","23/07/2024 14:00:00","23/07/2024 14:00:00"
+"task_example_5","Testes automatizados","Implementar testes unitários e de integração","Média","Carlos Oliveira","Fazendo","23/07/2024 08:30:00","23/07/2024 15:20:00"

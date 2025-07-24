@@ -1,0 +1,2124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base improvements for better device compatibility */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--background-gradient);
+    min-height: 100vh;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Better touch scrolling for iOS */
+.tasks-container,
+.modal-content,
+.export-options,
+.shortcuts-content {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Improved button styles for touch devices */
+button,
+select,
+input[type="file"] {
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+}
+
+/* Better focus styles for accessibility */
+button:focus,
+select:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Ensure minimum touch target size */
+.btn-export,
+.btn-import,
+.btn-shortcuts,
+.btn-add-task,
+.btn-clear-filters,
+.task-actions button {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+@media (max-width: 768px) {
+
+    .btn-export,
+    .btn-import,
+    .btn-shortcuts,
+    .btn-add-task,
+    .btn-clear-filters,
+    .task-actions button {
+        min-height: 48px;
+        min-width: 48px;
+    }
+}
+
+/* CSS Variables for Themes */
+:root {
+    /* Default Theme - Tema Claro Moderno */
+    --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    --background-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --card-background: rgba(255, 255, 255, 0.98);
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --accent-color: #4f46e5;
+
+    /* Column Colors */
+    --todo-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --doing-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --done-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+    /* Priority Colors */
+    --priority-high: #dc2626;
+    --priority-medium: #ea580c;
+    --priority-low: #16a34a;
+
+    /* Border and Shadow */
+    --border-color: #e2e8f0;
+    --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-gradient: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    --background-gradient: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    --card-background: rgba(45, 55, 72, 0.95);
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted: #a0aec0;
+    --accent-color: #63b3ed;
+
+    --todo-gradient: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    --doing-gradient: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    --done-gradient: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+
+    --border-color: #4a5568;
+    --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Ocean Theme */
+[data-theme="ocean"] {
+    --primary-gradient: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    --background-gradient: linear-gradient(135deg, #0369a1 0%, #0c4a6e 100%);
+    --card-background: rgba(240, 249, 255, 0.95);
+    --text-primary: #0c4a6e;
+    --text-secondary: #0369a1;
+    --text-muted: #0284c7;
+    --accent-color: #0ea5e9;
+
+    --todo-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    --doing-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --done-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+/* Sunset Theme */
+[data-theme="sunset"] {
+    --primary-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --background-gradient: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+    --card-background: rgba(255, 251, 235, 0.95);
+    --text-primary: #92400e;
+    --text-secondary: #b45309;
+    --text-muted: #d97706;
+    --accent-color: #f59e0b;
+
+    --todo-gradient: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    --doing-gradient: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    --done-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Forest Theme */
+[data-theme="forest"] {
+    --primary-gradient: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    --background-gradient: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+    --card-background: rgba(240, 253, 244, 0.95);
+    --text-primary: #14532d;
+    --text-secondary: #166534;
+    --text-muted: #16a34a;
+    --accent-color: #22c55e;
+
+    --todo-gradient: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+    --doing-gradient: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    --done-gradient: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+}
+
+/* Minimal Theme */
+[data-theme="minimal"] {
+    --primary-gradient: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    --background-gradient: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    --card-background: rgba(255, 255, 255, 0.98);
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-muted: #6b7280;
+    --accent-color: #4b5563;
+
+    --todo-gradient: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    --doing-gradient: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    --done-gradient: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+
+    --border-color: #d1d5db;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+    --primary-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    --background-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    --card-background: rgba(255, 255, 255, 0.95);
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --accent-color: #0ea5e9;
+
+    /* Column Colors */
+    --todo-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --doing-gradient: linear-gradient(135deg, #06b6d4 0%, #0284c7 100%);
+    --done-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+
+    /* Priority Colors */
+    --priority-high: #ef4444;
+    --priority-medium: #f97316;
+    --priority-low: #22c55e;
+
+    /* Border and Shadow */
+    --border-color: #e2e8f0;
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background: var(--card-background);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-light);
+    backdrop-filter: blur(10px);
+}
+
+.header h1 {
+    color: var(--text-secondary);
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.header h1 i {
+    margin-right: 10px;
+    color: var(--accent-color);
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.theme-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-selector label {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.theme-selector select {
+    padding: 8px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-background);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.theme-selector select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.btn-add-task {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add-task:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Export/Import Controls */
+.export-import-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-export,
+.btn-import {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-import {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.btn-export:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-import:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.import-container {
+    position: relative;
+}
+
+/* Shortcuts Button */
+.btn-shortcuts {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+}
+
+.btn-shortcuts:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+}
+
+.btn-shortcuts i {
+    font-size: 1.1rem;
+}
+
+/* Dark theme adjustments for shortcuts button */
+[data-theme="dark"] .btn-shortcuts {
+    background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+[data-theme="dark"] .btn-shortcuts:hover {
+    background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);
+    box-shadow: 0 6px 20px rgba(159, 122, 234, 0.4);
+}
+
+/* Export Modal Styles */
+.export-options {
+    padding: 30px;
+}
+
+.export-option {
+    margin-bottom: 15px;
+}
+
+.btn-export-format {
+    width: 100%;
+    background: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+
+.btn-export-format:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.btn-export-format i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    min-width: 40px;
+}
+
+.btn-export-format h4 {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.btn-export-format p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Dark theme adjustments for export */
+[data-theme="dark"] .btn-export-format {
+    background: #4a5568;
+    border-color: #2d3748;
+}
+
+[data-theme="dark"] .btn-export-format:hover {
+    border-color: #63b3ed;
+}
+
+/* Keyboard Shortcuts Modal Styles */
+.shortcuts-content {
+    padding: 30px;
+}
+
+.shortcuts-section {
+    margin-bottom: 25px;
+}
+
+.shortcuts-section:last-child {
+    margin-bottom: 0;
+}
+
+.shortcuts-section h4 {
+    color: var(--accent-color);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.shortcut-item:last-child {
+    border-bottom: none;
+}
+
+.shortcut-item kbd {
+    background: var(--accent-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin: 0 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.shortcut-item span {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.tip-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    color: var(--text-secondary);
+}
+
+.tip-item i {
+    color: var(--accent-color);
+    min-width: 20px;
+    font-size: 0.9rem;
+}
+
+.tip-item span {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Dark theme adjustments for shortcuts modal */
+[data-theme="dark"] .shortcut-item kbd {
+    background: #63b3ed;
+    color: #1a202c;
+}
+
+[data-theme="dark"] .shortcut-item {
+    border-bottom-color: #4a5568;
+}
+
+/* Filter Section Styles */
+.filter-section {
+    background: var(--card-background);
+    border-radius: 15px;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-light);
+    backdrop-filter: blur(10px);
+}
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 60px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 200px;
+    flex: 0 1 auto;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    min-width: fit-content;
+}
+
+.filter-group label i {
+    margin-right: 5px;
+    color: var(--accent-color);
+}
+
+.filter-group select {
+    padding: 8px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: var(--card-background);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    min-width: 160px;
+    flex: 1;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.btn-clear-filters {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    min-height: 44px;
+    flex: 0 0 auto;
+}
+
+.btn-clear-filters:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.filter-stats {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    padding: 8px 12px;
+    background: rgba(79, 70, 229, 0.1);
+    border-radius: 8px;
+    min-width: 200px;
+    flex: 0 0 auto;
+}
+
+.filter-stats i {
+    margin-right: 5px;
+    color: var(--accent-color);
+}
+
+/* Kanban Board Styles */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+/* Ensure minimum column width is respected on medium screens */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .kanban-board {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+.column {
+    background: var(--card-background);
+    border-radius: 15px;
+    box-shadow: var(--shadow-light);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    min-height: 500px;
+}
+
+.column-header {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+}
+
+.column-header.todo {
+    background: var(--todo-gradient);
+}
+
+.column-header.doing {
+    background: var(--doing-gradient);
+}
+
+.column-header.done {
+    background: var(--done-gradient);
+}
+
+.column-header h2 {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.task-count {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.tasks-container {
+    padding: 20px;
+    min-height: 400px;
+}
+
+/* Task Card Styles */
+.task-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--border-color);
+}
+
+/* Dark theme task cards */
+[data-theme="dark"] .task-card {
+    background: #4a5568;
+    color: #f7fafc;
+}
+
+[data-theme="dark"] .task-title {
+    color: #f7fafc;
+}
+
+[data-theme="dark"] .task-description {
+    color: #cbd5e0;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.task-card.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.task-card.priority-high {
+    border-left-color: var(--priority-high);
+}
+
+.task-card.priority-medium {
+    border-left-color: var(--priority-medium);
+}
+
+.task-card.priority-low {
+    border-left-color: var(--priority-low);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.task-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    flex: 1;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-card:hover .task-actions {
+    opacity: 1;
+}
+
+.task-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.task-actions .edit-btn {
+    color: #4299e1;
+}
+
+.task-actions .delete-btn {
+    color: #e53e3e;
+}
+
+.task-actions button:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.task-description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.task-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #a0aec0;
+}
+
+.task-priority {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+.priority-high {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.priority-medium {
+    background: #feebc8;
+    color: #c05621;
+}
+
+.priority-low {
+    background: #c6f6d5;
+    color: #2f855a;
+}
+
+.task-assignee {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+/* Dark theme modal adjustments */
+[data-theme="dark"] .modal-content {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .form-group select {
+    background: #2d3748;
+    color: #f7fafc;
+    border-color: #4a5568;
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group textarea:focus,
+[data-theme="dark"] .form-group select:focus {
+    border-color: #63b3ed;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover {
+    opacity: 0.7;
+}
+
+form {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--card-background);
+    color: var(--text-primary);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+}
+
+/* Responsive Design - Breakpoints Otimizados */
+
+/* Ultra large screens (1920px+) - 4K e monitores grandes */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 30px 40px;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+
+    .header {
+        padding: 30px 40px;
+    }
+
+    .filter-section {
+        padding: 25px 40px;
+    }
+
+    .column {
+        min-height: 600px;
+    }
+
+    .task-card {
+        padding: 20px;
+        margin-bottom: 18px;
+    }
+}
+
+/* Extra large screens (1400px to 1919px) - Monitores wide */
+@media (min-width: 1400px) and (max-width: 1919px) {
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 25px 30px;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+}
+
+/* Large desktops (1200px to 1400px) - Laptops grandes */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .kanban-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+    }
+
+    .container {
+        padding: 20px 25px;
+    }
+}
+
+/* Standard desktops (1024px to 1200px) - Laptops padrão */
+@media (max-width: 1200px) {
+    .kanban-board {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+}
+
+/* Tablets landscape (768px to 1024px) - iPads, tablets Android */
+@media (max-width: 1024px) {
+    .header {
+        padding: 20px 0;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.9rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .header-controls {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .filter-section {
+        padding: 18px 25px;
+    }
+
+    .filter-controls {
+        gap: 15px;
+        justify-content: center;
+        min-height: auto;
+    }
+
+    .filter-group {
+        flex: 1 1 250px;
+        min-width: 250px;
+        max-width: 350px;
+        justify-content: center;
+    }
+
+    .filter-group select {
+        min-width: 140px;
+    }
+
+    .filter-stats {
+        flex: 1 1 100%;
+        order: 3;
+        margin-top: 10px;
+        min-width: auto;
+    }
+
+    .btn-clear-filters {
+        order: 2;
+        flex: 0 0 auto;
+        margin: 0 auto;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+    }
+
+    .column {
+        min-height: 450px;
+    }
+}
+
+/* Tablet landscape específico (iPad Pro, Galaxy Tab) */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+    .kanban-board {
+        grid-template-columns: repeat(3, minmax(280px, 1fr));
+        gap: 22px;
+    }
+
+    .header-controls {
+        justify-content: space-between;
+    }
+
+    .export-import-controls {
+        gap: 8px;
+    }
+
+    .btn-export,
+    .btn-import {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+/* iPad específico (768px x 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .theme-selector select {
+        min-width: 180px;
+    }
+
+    .filter-section {
+        padding: 18px 25px;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Large smartphones landscape (667px to 767px) - iPhone Plus, etc */
+@media (max-width: 767px) and (orientation: landscape) {
+    .container {
+        padding: 10px 15px;
+    }
+
+    .header {
+        padding: 12px 0;
+        gap: 12px;
+    }
+
+    .header h1 {
+        font-size: 1.4rem;
+    }
+
+    .header-controls {
+        gap: 10px;
+    }
+
+    .export-import-controls {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .btn-export,
+    .btn-import {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        min-width: 80px;
+    }
+
+    .btn-shortcuts {
+        padding: 6px;
+        min-width: 32px;
+        height: 32px;
+    }
+
+    .filter-section {
+        padding: 10px 15px;
+        margin-bottom: 15px;
+    }
+
+    .filter-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .column {
+        min-height: 300px;
+    }
+
+    .column-header {
+        padding: 10px 15px;
+    }
+
+    .column-header h2 {
+        font-size: 1rem;
+    }
+
+    .tasks-container {
+        padding: 12px;
+        min-height: 200px;
+    }
+
+    .task-card {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .task-title {
+        font-size: 0.9rem;
+    }
+
+    .task-description {
+        font-size: 0.8rem;
+    }
+}
+
+/* Tablets portrait e smartphones grandes (600px to 768px) */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .header-controls {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .export-import-controls {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn-export,
+    .btn-import {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .btn-shortcuts {
+        padding: 8px;
+        min-width: 36px;
+        height: 36px;
+    }
+
+    .btn-shortcuts i {
+        font-size: 1rem;
+    }
+
+    .theme-selector {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .theme-selector select {
+        min-width: auto;
+        width: 250px;
+        max-width: 100%;
+    }
+
+    .filter-section {
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        min-height: auto;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        min-width: auto;
+        max-width: none;
+    }
+
+    .filter-group label {
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .filter-group select {
+        min-width: auto;
+        width: 100%;
+        padding: 12px;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .filter-stats {
+        margin: 0;
+        text-align: center;
+        padding: 12px;
+        background: rgba(79, 70, 229, 0.1);
+        border-radius: 8px;
+        order: 1;
+        min-width: auto;
+    }
+
+    .btn-clear-filters {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+        order: 3;
+        margin: 0;
+    }
+
+    .kanban-board {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .column {
+        min-height: 350px;
+    }
+
+    .column-header {
+        padding: 18px 20px;
+    }
+
+    .column-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .tasks-container {
+        padding: 18px;
+        min-height: 280px;
+    }
+
+    .task-card {
+        margin-bottom: 14px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 8% auto;
+        max-width: none;
+    }
+
+    .modal-header {
+        padding: 18px 25px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.3rem;
+    }
+
+    form {
+        padding: 25px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        padding: 14px 24px;
+    }
+
+    /* Export modal adjustments */
+    .export-options {
+        padding: 25px;
+    }
+
+    .btn-export-format {
+        padding: 18px;
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .btn-export-format i {
+        font-size: 2.5rem;
+    }
+
+    /* Shortcuts modal adjustments */
+    .shortcuts-content {
+        padding: 25px;
+    }
+
+    .shortcut-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px 0;
+    }
+
+    .shortcut-item kbd {
+        align-self: flex-end;
+    }
+}
+
+/* Mobile phones (480px to 600px) */
+@media (max-width: 600px) {
+    .container {
+        padding: 12px;
+    }
+
+    .header h1 {
+        font-size: 1.6rem;
+    }
+
+    .export-import-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-export,
+    .btn-import {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .theme-selector select {
+        width: 100%;
+    }
+
+    .filter-section {
+        padding: 10px 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .filter-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .filter-controls>* {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .column {
+        min-height: 300px;
+    }
+
+    .column-header {
+        padding: 15px 18px;
+    }
+
+    .tasks-container {
+        padding: 15px;
+    }
+
+    .modal-content {
+        margin: 5% auto;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    .export-options,
+    .shortcuts-content {
+        padding: 20px;
+    }
+}
+
+/* Smartphones muito pequenos (320px to 480px) - iPhone SE, Android pequenos */
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+        min-width: 320px;
+        /* Garante largura mínima */
+    }
+
+    .header {
+        padding: 8px 0;
+        gap: 10px;
+    }
+
+    .header h1 {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        word-break: break-word;
+    }
+
+    .header-controls {
+        gap: 8px;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .export-import-controls {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .btn-export,
+    .btn-import {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+    }
+
+    .btn-shortcuts {
+        padding: 8px;
+        min-width: 36px;
+        height: 36px;
+        align-self: center;
+    }
+
+    .btn-shortcuts i {
+        font-size: 0.9rem;
+    }
+
+    .theme-selector {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .theme-selector select {
+        padding: 8px;
+        font-size: 0.85rem;
+        min-width: 0;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .filter-section {
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .filter-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .filter-controls>* {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .filter-group {
+        gap: 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-group label {
+        font-size: 0.8rem;
+        text-align: center;
+        margin-bottom: 2px;
+    }
+
+    .filter-group select {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+        width: 100%;
+        height: 32px;
+    }
+
+    .btn-clear-filters {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        align-self: center;
+        height: 32px;
+        margin-top: 4px;
+    }
+
+    .filter-stats {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+        text-align: center;
+        margin-top: 4px;
+    }
+
+    .kanban-board {
+        gap: 12px;
+    }
+
+    .column {
+        min-height: 280px;
+    }
+
+    .column-header {
+        padding: 10px 12px;
+    }
+
+    .column-header h2 {
+        font-size: 1rem;
+    }
+
+    .task-count {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+    }
+
+    .tasks-container {
+        padding: 10px;
+        min-height: 200px;
+    }
+
+    .task-card {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .task-title {
+        font-size: 0.9rem;
+        line-height: 1.3;
+    }
+
+    .task-description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .task-meta {
+        font-size: 0.65rem;
+    }
+
+    .task-priority {
+        font-size: 0.6rem;
+        padding: 1px 5px;
+    }
+
+    .task-actions button {
+        padding: 4px;
+        font-size: 0.8rem;
+    }
+
+    /* Modal adjustments for very small screens */
+    .modal-content {
+        width: 98%;
+        margin: 2% auto;
+        border-radius: 12px;
+    }
+
+    .modal-header {
+        padding: 12px 16px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .close {
+        font-size: 20px;
+    }
+
+    form {
+        padding: 16px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 8px;
+        font-size: 0.85rem;
+        border-radius: 6px;
+    }
+
+    .form-group textarea {
+        min-height: 60px;
+    }
+
+    .modal-actions {
+        margin-top: 16px;
+        gap: 6px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+
+    /* Export modal adjustments */
+    .export-options {
+        padding: 16px;
+    }
+
+    .btn-export-format {
+        padding: 12px;
+        gap: 8px;
+        border-radius: 8px;
+    }
+
+    .btn-export-format i {
+        font-size: 1.5rem;
+    }
+
+    .btn-export-format h4 {
+        font-size: 0.9rem;
+        margin-bottom: 3px;
+    }
+
+    .btn-export-format p {
+        font-size: 0.75rem;
+    }
+
+    /* Shortcuts modal adjustments */
+    .shortcuts-content {
+        padding: 16px;
+    }
+
+    .shortcuts-section {
+        margin-bottom: 16px;
+    }
+
+    .shortcuts-section h4 {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .shortcut-item {
+        padding: 8px 0;
+        gap: 5px;
+    }
+
+    .shortcut-item span {
+        font-size: 0.8rem;
+    }
+
+    .shortcut-item kbd {
+        font-size: 0.7rem;
+        padding: 2px 5px;
+    }
+
+    .tip-item {
+        gap: 8px;
+        padding: 5px 0;
+    }
+
+    .tip-item span {
+        font-size: 0.8rem;
+    }
+
+    /* Empty state adjustments */
+    .empty-state {
+        padding: 25px 12px;
+    }
+
+    .empty-state i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .empty-state p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Smartphones ultra pequenos (até 350px) - Dispositivos antigos */
+@media (max-width: 350px) {
+    .container {
+        padding: 5px;
+        min-width: 300px;
+    }
+
+    .header h1 {
+        font-size: 1.1rem;
+    }
+
+    .btn-export,
+    .btn-import {
+        font-size: 0.7rem;
+        padding: 6px 8px;
+    }
+
+    .filter-group select {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+        height: 28px;
+    }
+
+    .filter-section {
+        padding: 6px 10px;
+        margin-bottom: 8px;
+    }
+
+    .filter-controls {
+        gap: 4px;
+    }
+
+    .filter-group {
+        gap: 3px;
+    }
+
+    .filter-group label {
+        font-size: 0.75rem;
+        margin-bottom: 1px;
+    }
+
+    .btn-clear-filters {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        height: 28px;
+        margin-top: 2px;
+    }
+
+    .filter-stats {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        margin-top: 2px;
+    }
+
+    .column-header h2 {
+        font-size: 0.9rem;
+    }
+
+    .task-title {
+        font-size: 0.85rem;
+    }
+
+    .task-description {
+        font-size: 0.75rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+}
+
+/* Drag and Drop Visual Feedback */
+.tasks-container.drag-over {
+    background: rgba(102, 126, 234, 0.1);
+    border: 2px dashed var(--accent-color);
+    border-radius: 8px;
+}
+
+.task-card.dragging {
+    cursor: grabbing;
+}
+
+/* Animations */
+.task-card {
+    animation: taskSlideIn 0.3s ease;
+}
+
+@keyframes taskSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Dispositivos com alta densidade de pixels (Retina, AMOLED) */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .task-card {
+        border-width: 1px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .modal-content {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-export,
+    .btn-import,
+    .btn-shortcuts {
+        border: 1px solid transparent;
+    }
+
+    .filter-group select,
+    .theme-selector select {
+        border-width: 1px;
+    }
+}
+
+/* Dispositivos foldable e ultra wide */
+@media (min-width: 768px) and (max-width: 1024px) and (min-aspect-ratio: 4/3) {
+    .kanban-board {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+    .column {
+        min-height: 400px;
+    }
+}
+
+/* Modo paisagem para smartphones */
+@media (max-height: 500px) and (orientation: landscape) {
+    .header {
+        padding: 8px 0;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .filter-section {
+        padding: 8px 15px;
+        margin-bottom: 10px;
+    }
+
+    .column {
+        min-height: 250px;
+    }
+
+    .tasks-container {
+        min-height: 150px;
+        padding: 10px;
+    }
+
+    .modal-content {
+        margin: 1% auto;
+        max-height: 95vh;
+        overflow-y: auto;
+    }
+
+    .export-options,
+    .shortcuts-content {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+/* Suporte para modo escuro do sistema */
+@media (prefers-color-scheme: dark) {
+    body:not([data-theme]) {
+        --primary-gradient: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        --background-gradient: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        --card-background: rgba(45, 55, 72, 0.95);
+        --text-primary: #f7fafc;
+        --text-secondary: #e2e8f0;
+        --text-muted: #a0aec0;
+        --accent-color: #63b3ed;
+        --border-color: #4a5568;
+        --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
+        --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Suporte para movimento reduzido (acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .task-card {
+        animation: none;
+    }
+
+    .modal-content {
+        animation: none;
+    }
+}
+
+/* Suporte para contraste alto */
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: #000;
+        --text-primary: #000;
+        --text-secondary: #333;
+    }
+
+    .task-card {
+        border: 2px solid #000;
+    }
+
+    .btn-primary,
+    .btn-export,
+    .btn-import,
+    .btn-shortcuts {
+        border: 2px solid #000;
+    }
+}
+
+/* Print styles */
+@media print {
+
+    .header-controls,
+    .filter-section,
+    .task-actions,
+    .modal {
+        display: none !important;
+    }
+
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    .kanban-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .task-card {
+        break-inside: avoid;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        background: white !important;
+        color: black !important;
+    }
+
+    .column-header {
+        background: #f5f5f5 !important;
+        color: black !important;
+    }
+}
+
+/* Dispositivos com orientação específica */
+@media (orientation: portrait) and (max-width: 768px) {
+    .kanban-board {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+    .kanban-board {
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
+
+    .filter-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
