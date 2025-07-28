@@ -42,9 +42,6 @@
                             <i class="fas fa-upload"></i> Importar
                         </button>
                     </div>
-                    <button class="btn-shortcuts" onclick="showKeyboardShortcuts()" title="Atalhos do teclado">
-                        <i class="fas fa-keyboard"></i>
-                    </button>
                 </div>
             </div>
         </header>
@@ -52,35 +49,36 @@
         <!-- Filter Section -->
         <section class="filter-section">
             <div class="filter-controls">
-                <div class="filter-group">
-                    <label for="priorityFilter">
-                        <i class="fas fa-flag"></i> Filtrar por Prioridade:
-                    </label>
-                    <select id="priorityFilter" onchange="applyFilters()">
-                        <option value="">Todas as prioridades</option>
-                        <option value="high">Alta</option>
-                        <option value="medium">Média</option>
-                        <option value="low">Baixa</option>
-                    </select>
+                <div class="filter-inputs-row">
+                    <div class="filter-group">
+                        <label for="priorityFilter">
+                            <i class="fas fa-flag"></i> Filtrar por Prioridade:
+                        </label>
+                        <select id="priorityFilter" onchange="applyFilters()">
+                            <option value="">Todas as prioridades</option>
+                            <option value="high">Alta</option>
+                            <option value="medium">Média</option>
+                            <option value="low">Baixa</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="assigneeFilter">
+                            <i class="fas fa-user"></i> Filtrar por Responsável:
+                        </label>
+                        <select id="assigneeFilter" onchange="applyFilters()">
+                            <option value="">Todos os responsáveis</option>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
                 </div>
 
-                <div class="filter-group">
-                    <label for="assigneeFilter">
-                        <i class="fas fa-user"></i> Filtrar por Responsável:
-                    </label>
-                    <select id="assigneeFilter" onchange="applyFilters()">
-                        <option value="">Todos os responsáveis</option>
-                        <!-- Options will be populated dynamically -->
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <button class="btn-clear-filters" onclick="clearFilters()">
-                        <i class="fas fa-times"></i> Limpar Filtros
-                    </button>
-                </div>
+                <button class="btn-clear-filters" onclick="clearFilters()">
+                    <i class="fas fa-times"></i> Limpar Filtros
+                </button>
 
                 <div class="filter-stats">
+                    <i class="fas fa-chart-bar"></i>
                     <span id="filterStats">Mostrando todas as tarefas</span>
                 </div>
             </div>
@@ -180,53 +178,6 @@
                             <p>Formato tabular para planilhas</p>
                         </div>
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Keyboard Shortcuts Modal -->
-    <div id="shortcutsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-keyboard"></i> Atalhos do Teclado</h3>
-                <span class="close" onclick="closeShortcutsModal()">&times;</span>
-            </div>
-            <div class="shortcuts-content">
-                <div class="shortcuts-section">
-                    <h4><i class="fas fa-magic"></i> Atalhos Rápidos</h4>
-                    <div class="shortcut-item">
-                        <kbd>Ctrl</kbd> + <kbd>N</kbd>
-                        <span>Nova tarefa</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <kbd>Esc</kbd>
-                        <span>Fechar modal</span>
-                    </div>
-                </div>
-
-                <div class="shortcuts-section">
-                    <h4><i class="fas fa-lightbulb"></i> Dicas de Uso</h4>
-                    <div class="tip-item">
-                        <i class="fas fa-hand-paper"></i>
-                        <span>Arraste e solte as tarefas entre as colunas</span>
-                    </div>
-                    <div class="tip-item">
-                        <i class="fas fa-edit"></i>
-                        <span>Clique no ícone de edição para modificar uma tarefa</span>
-                    </div>
-                    <div class="tip-item">
-                        <i class="fas fa-trash"></i>
-                        <span>Use o botão de lixeira para excluir tarefas</span>
-                    </div>
-                    <div class="tip-item">
-                        <i class="fas fa-filter"></i>
-                        <span>Use os filtros para organizar suas tarefas</span>
-                    </div>
-                    <div class="tip-item">
-                        <i class="fas fa-palette"></i>
-                        <span>Troque o tema para personalizar a interface</span>
-                    </div>
                 </div>
             </div>
         </div>

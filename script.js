@@ -1012,24 +1012,10 @@ function convertStatusFromLabel(label) {
 // Close export modal when clicking outside
 window.onclick = function (event) {
     const exportModal = document.getElementById('exportModal');
-    const shortcutsModal = document.getElementById('shortcutsModal');
 
     if (event.target === exportModal) {
         closeExportModal();
     }
-
-    if (event.target === shortcutsModal) {
-        closeShortcutsModal();
-    }
-}
-
-// Keyboard shortcuts info
-function showKeyboardShortcuts() {
-    document.getElementById('shortcutsModal').style.display = 'block';
-}
-
-function closeShortcutsModal() {
-    document.getElementById('shortcutsModal').style.display = 'none';
 }
 
 // Performance optimization: Use requestAnimationFrame for smooth animations
